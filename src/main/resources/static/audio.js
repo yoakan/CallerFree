@@ -1,6 +1,6 @@
 
-var startBtn ;
-var stopBtn ;
+var startListenBtn ;
+var stopListenBtn ;
 var player ;
 var micSelect;
 let mediaRecorder;
@@ -16,29 +16,29 @@ recognition.lang = 'es-ES';
 recognition.interimResult = false;
 
 $( document ).ready(function() {
-        startBtn = $("#btnStart");
-        stopBtn = $("#btnStop");
+        startListenBtn = $("#startListen");
+        stopListenBtn = $("#stopListen");
         player = $("#player");
         micSelect = $("#micSelect");
-        startBtn.on( "click", function() {
+        startListenBtn.on( "click", function() {
             if (mediaRecorder) {
                 mediaRecorder.start();
                 //running = true;
-                startBtn.disabled = true;
-                stopBtn.disabled = false;
                 
                 console.log("Grabando...");
+                $("#stopListen").show();
+                $("#startListen").hide();
             }
             });
-
-        stopBtn.on( "click", function() {
+        $("#startListen").hide();
+        stopListenBtn.on( "click", function() {
             if (mediaRecorder) {
                 mediaRecorder.stop();
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
+                
                 //running = false;
                 console.log("Grabación detenida.");
-            
+                $("#startListen").show();
+                $("#stopListen").hide();
             }
             
         });
@@ -61,7 +61,7 @@ $( document ).ready(function() {
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
                     const audioUrl = URL.createObjectURL(audioBlob);
-                    player.src = audioUrl;
+                    //player.src = audioUrl;
                     
                     /*const a = document.createElement("a");
                     a.href = URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm" }));

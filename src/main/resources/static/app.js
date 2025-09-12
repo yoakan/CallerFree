@@ -30,7 +30,7 @@ function connect() {
             }else if(voiceExist ===-1){
                 voice= base64ToBlob(user.voice, "audio/webm");
                 audio = URL.createObjectURL(voice);
-                speaker(audio);
+                speaker(audio,user.name);
             }else{
                 lastBase64.splice(voiceExist,1)
             }
@@ -38,6 +38,7 @@ function connect() {
         });
         addNames();
         listeningStart.play();
+        hideConnect();
     });
 
 }
@@ -45,11 +46,13 @@ function connect() {
 function addNames(){
     $.get( "/users", function( data ) {
         listNames = data;
+        addUsers(listNames);
     });
 }
 function checkNames(name){
     if(!listNames.includes(name)){
         listNames.push(name);
+        addUser(name)
     }
 }
 function deleteName(){
@@ -67,6 +70,7 @@ function disconnect() {
     if (stompClient !== null) {
         deleteName();
         stompClient.disconnect();
+        showConnect();
     }
     setConnected(false);
     console.log("Disconnected");
@@ -95,6 +99,7 @@ $(function () {
     });
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
+
 
 });
 

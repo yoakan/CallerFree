@@ -1,5 +1,3 @@
-# WebSockets in a Spring Boot Application
+# Caller sesion for Springboot
 
-- `/app/user` - Message Mapping URL
-- `/topic/user` - Message Broker topic for pushing messages to the UI back.
  
