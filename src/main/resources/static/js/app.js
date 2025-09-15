@@ -1,6 +1,6 @@
 var stompClient = null;
 var listNames=[];
-var lastBase64 = [];
+var nomUsed;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -22,17 +22,16 @@ function connect() {
         //recive los mensajes
         stompClient.subscribe('/topic/user/message', function (greeting) {
             let user =JSON.parse(greeting.body);
-            let voiceExist= lastBase64.indexOf( user.voice);
+
             let voice;
             let audio;
             if(user.voice.includes("Finish session")){
                 listNames.splice(listNames.indexOf(user.name),1)
-            }else if(voiceExist ===-1){
+                listeningFinish.play();
+            }else{
                 voice= base64ToBlob(user.voice, "audio/webm");
                 audio = URL.createObjectURL(voice);
                 speaker(audio,user.name);
-            }else{
-                lastBase64.splice(voiceExist,1)
             }
             checkNames(user.name);
         });
@@ -80,7 +79,7 @@ function disconnect() {
 async function sendVoice(voice){
     if(stompClient !==null){
         const base64 = await blobToBase64(voice);
-        lastBase64.push(base64);
+        nomUsed =$("#name").val();
         stompClient.send("/app/user/message", {}, JSON.stringify(
             {'name': $("#name").val(),'voice':
                 base64

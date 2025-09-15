@@ -23,10 +23,17 @@ function addUsers(users){
 }
 function addUser(nameUser){
     let userElement = exampleUser.clone();
-        $(userElement).find("name").text(nameUser)
+        $(userElement).find(".name").text(nameUser)
         $(userElement).attr('id', nameUser);
-        $("listMainNames").append(nameUser);
+        $("#listMainNames").append(userElement);
 }
 function removeUser(nameUser){
     $("#"+nameUser).removeUser();
+}
+
+function elementUserSpeak(nameUser){
+    $("#"+nameUser).addClass("user-talk");
+}
+function elementUserNoSpeak(nameUser){
+    $("#"+nameUser).removeClass("user-talk");
 }

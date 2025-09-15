@@ -1,5 +1,5 @@
-var listeningStart = new Audio("/sounds/airport-call-157168.mp3");
-var listeningSpeak = new Audio();
+var listeningStart = new Audio("/sounds/connect.mp3");
+var listeningFinish = new Audio("/sounds/connect.mp3");
 var listNameSrcs = {
     unname:{
         listener:new Audio(),
@@ -39,12 +39,17 @@ function playThisSound(name){
     if(listNameSrcs[name].listSrc.length!==0){
         listNameSrcs[name].listener.src= listNameSrcs[name].listSrc[firstElement];
         listNameSrcs[name].listener.play();
+        if(name === nomUsed){
+            listNameSrcs[name].listener.volume=0;
+        }
         listNameSrcs[name].listSrc.shift();
-        
+        elementUserSpeak(name);
         $(listNameSrcs[name].listener).on("ended", function() {
              
             playThisSound(this.subname);
         });
+    }else{
+        elementUserNoSpeak(name);
     }
     
 }

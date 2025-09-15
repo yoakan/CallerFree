@@ -63,10 +63,7 @@ $( document ).ready(function() {
                     const audioUrl = URL.createObjectURL(audioBlob);
                     //player.src = audioUrl;
                     
-                    /*const a = document.createElement("a");
-                    a.href = URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm" }));
-                    a.download = "mi_grabacion.webm"; // nombre del archivo
-                    a.click();*/
+                    
                     
                     //speaker(audioUrl)
                         
@@ -105,7 +102,7 @@ function checkFrequency() {
       const nivel = dataArray[binIndex];
 
       if (nivel > lvlMinVoice) {
-        console.log(`🔊 Se detecta energía en ${frecuenciaObjetivo} Hz`);
+        //console.log(`🔊 Se detecta energía en ${frecuenciaObjetivo} Hz`);
         if(  mediaRecorder.state === "inactive"){
             mediaRecorder.start();
         }
@@ -113,12 +110,9 @@ function checkFrequency() {
         spoke = true;
         
       } else {
-        console.log(`🤫 No se detecta en ${frecuenciaObjetivo} Hz`);
+        //console.log(`🤫 No se detecta en ${frecuenciaObjetivo} Hz`);
         if(spoke){
             
-            //let audioBlobSpeak = new Blob(audioChunks, { type: "audio/webm" });
-            //let src = URL.createObjectURL(audioBlobSpeak);
-            //speaker(src)
             spoke = false;
             setTimeout(function(){
             mediaRecorder.stop();

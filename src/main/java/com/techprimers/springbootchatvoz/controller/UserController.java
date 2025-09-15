@@ -1,4 +1,4 @@
-package com.techprimers.springbootchatvoz.resource;
+package com.techprimers.springbootchatvoz.controller;
 
 import com.techprimers.springbootchatvoz.model.User;
 import com.techprimers.springbootchatvoz.model.UserResponse;
@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
