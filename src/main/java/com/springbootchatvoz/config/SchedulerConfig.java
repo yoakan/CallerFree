@@ -1,6 +1,5 @@
-package com.techprimers.springbootchatvoz.config;
+package com.springbootchatvoz.config;
 
-import com.techprimers.springbootchatvoz.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

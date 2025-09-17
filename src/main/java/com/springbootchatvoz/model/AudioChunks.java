@@ -1,4 +1,4 @@
-package com.techprimers.springbootchatvoz.model;
+package com.springbootchatvoz.model;
 
 public class AudioChunks {
     public String getFilename() {

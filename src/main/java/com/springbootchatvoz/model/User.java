@@ -1,4 +1,4 @@
-package com.techprimers.springbootchatvoz.model;
+package com.springbootchatvoz.model;
 
 import java.io.InputStream;
 
@@ -9,7 +9,10 @@ public class User {
 
     public User() {
     }
-
+    public User(String name,String voice) {
+        this.name = name;
+        this.voice = voice;
+    }
     public User(String name) {
         this.name = name;
     }

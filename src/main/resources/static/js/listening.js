@@ -8,7 +8,7 @@ var listNameSrcs = {
 };
 let firstElement= 0;
 
-function speaker(src,name){
+async function speaker(src,name){
     if(src !==null){
         if(!listNameSrcs.hasOwnProperty(name)){
             listNameSrcs[name] ={
@@ -35,7 +35,7 @@ function speaker(src,name){
   }
 });*/
 
-function playThisSound(name){
+async function playThisSound(name){
     if(listNameSrcs[name].listSrc.length!==0){
         listNameSrcs[name].listener.src= listNameSrcs[name].listSrc[firstElement];
         listNameSrcs[name].listener.play();

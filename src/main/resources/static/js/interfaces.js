@@ -1,16 +1,18 @@
 
 var exampleUser;
 function hideConnect(){
-    $(".connect").hide();
+    $(".connectForm").attr("style", "display: none !important");
+    $("#name").prop('disabled', true);
     $(".season").show();
 }
 function showConnect(){
-    $(".connect").show();
+    $(".connectForm").removeAttr( "style" );
+    $('#name').removeAttr('disabled');
      $(".season").hide();
 }
 $(function () {
     exampleUser=$(".user-connected").clone();
-    $(".user-connected").hide();
+    $("#exampleUser").attr("style", "display: none !important");
     $(".season").hide();
 
     }

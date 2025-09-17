@@ -43,7 +43,7 @@ function connect() {
 }
 
 function addNames(){
-    $.get( "/users", function( data ) {
+    $.get( "/usersGest", function( data ) {
         listNames = data;
         addUsers(listNames);
     });
@@ -56,7 +56,7 @@ function checkNames(name){
 }
 function deleteName(){
     $.ajax({
-        url: 'users/'+$("#name").val(),
+        url: 'usersGest/'+$("#name").val(),
         method: 'DELETE',
         dataType: 'json',
         success: function(data) {
@@ -122,3 +122,8 @@ function base64ToBlob(base64, contentType = "application/octet-stream") {
   const byteArray = new Uint8Array(byteNumbers);
   return new Blob([byteArray], { type: contentType });
 }
+
+$(window).on('beforeunload', function() {
+    disconnect();
+    return '';
+});
