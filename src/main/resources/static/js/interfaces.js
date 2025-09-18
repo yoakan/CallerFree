@@ -30,7 +30,7 @@ function addUser(nameUser){
         $("#listMainNames").append(userElement);
 }
 function removeUser(nameUser){
-    $("#"+nameUser).removeUser();
+    $("#"+nameUser).remove();
 }
 
 function elementUserSpeak(nameUser){
@@ -38,4 +38,7 @@ function elementUserSpeak(nameUser){
 }
 function elementUserNoSpeak(nameUser){
     $("#"+nameUser).removeClass("user-talk");
+}
+function removeSpeakers(){
+    $("#listMainNames").empty();
 }

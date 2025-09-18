@@ -1,7 +1,9 @@
+
+
 var stompClient = null;
 var listNames=[];
 var nomUsed;
-
+const finishSessionMsg= "Finish session";
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -19,33 +21,43 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
+        addMyName()
         //recive los mensajes
         stompClient.subscribe('/topic/user/message', function (greeting) {
             let user =JSON.parse(greeting.body);
 
             let voice;
             let audio;
-            if(user.voice.includes("Finish session")){
+            if(user.voice.includes(finishSessionMsg)){
                 listNames.splice(listNames.indexOf(user.name),1)
                 listeningFinish.play();
-            }else{
+                removeUser(user.name);
+            }else if(user.voice !==""){
                 voice= base64ToBlob(user.voice, "audio/webm");
                 audio = URL.createObjectURL(voice);
                 speaker(audio,user.name);
+            }else{
+                checkNames(user.name);
             }
-            checkNames(user.name);
+            
         });
-        addNames();
+        getNames();
         listeningStart.play();
         hideConnect();
     });
 
 }
 
-function addNames(){
+function getNames(){
     $.get( "/usersGest", function( data ) {
         listNames = data;
         addUsers(listNames);
+    });
+}
+function addMyName(){
+    $.get( "/usersGest/"+$("#name").val(), function( data ) {
+        console.log("Sucessfull");
+        sendMessage("");
     });
 }
 function checkNames(name){
@@ -54,36 +66,45 @@ function checkNames(name){
         addUser(name)
     }
 }
-function deleteName(){
+function deleteClient(){
     $.ajax({
         url: 'usersGest/'+$("#name").val(),
         method: 'DELETE',
-        dataType: 'json',
-        success: function(data) {
+        success: function(result) {
             console.log("Sucessfull");
-        }
+            sendMessage(finishSessionMsg);
+            stompClient.disconnect() ;
+        },
+         error: function(result) {
+            console.log("Sucessfull");
+            sendMessage(finishSessionMsg);
+            stompClient.disconnect() ;
+        },
     }
     );
 }
 function disconnect() {
     if (stompClient !== null) {
-        deleteName();
-        stompClient.disconnect();
+        deleteClient();
+        removeSpeakers();
+        listeningFinish.play();
         showConnect();
     }
     setConnected(false);
     console.log("Disconnected");
 }
 
-
+function sendMessage(value){
+    stompClient.send("/app/user/message", {}, JSON.stringify(
+            {'name': $("#name").val(),'voice':
+                value
+            }));
+}
 async function sendVoice(voice){
     if(stompClient !==null){
         const base64 = await blobToBase64(voice);
         nomUsed =$("#name").val();
-        stompClient.send("/app/user/message", {}, JSON.stringify(
-            {'name': $("#name").val(),'voice':
-                base64
-            }));
+        sendMessage(base64);
     }
     
 }

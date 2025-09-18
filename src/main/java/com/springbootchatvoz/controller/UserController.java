@@ -16,7 +16,6 @@ public class UserController {
     @MessageMapping("/user/message")
     @SendTo("/topic/user/message")
     public UserResponse sendMessage(User user) {
-        userService.addUser(user.getName());
         return new UserResponse( user.getName(),user.getVoice());
     }
 

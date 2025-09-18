@@ -1,16 +1,15 @@
 package com.springbootchatvoz.controller;
 
-import com.springbootchatvoz.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@Controller
+@RestController
 public class UserGestionController {
     @Autowired
     private  UserService userService;
@@ -18,14 +17,23 @@ public class UserGestionController {
     SimpMessagingTemplate template;
 
     @RequestMapping(value = "/usersGest",method = RequestMethod.GET)
+    @ResponseBody
     public Set<String> getUsers() {
 
         return userService.getUsers();
     }
+    @RequestMapping(value = "/usersGest/{name}",method = RequestMethod.GET)
+    @ResponseBody
+    public String addUser(@PathVariable String name) {
+
+        userService.addUser(name);
+        return "Sucefull";
+    }
 
     @RequestMapping(value = "/usersGest/{name}",method = RequestMethod.DELETE)
-    public void deleteUsers(@PathVariable String name) {
+    @ResponseBody
+    public ResponseEntity<?> deleteUsers(@PathVariable String name) {
         userService.deleteUser(name);
-        template.convertAndSend("/topic/user/message", new User(name,"Finish session"));
+        return ResponseEntity.ok("Succefull");
     }
 }

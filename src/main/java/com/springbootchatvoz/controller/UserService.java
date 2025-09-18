@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    private Set<String> users = new HashSet<>();
+    private static Set<String> users = new HashSet<>();
     public  void addUser(String name){
         users.add(name);
 
