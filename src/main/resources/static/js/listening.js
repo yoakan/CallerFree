@@ -1,5 +1,5 @@
 var listeningStart = new Audio("/sounds/connect.mp3");
-var listeningFinish = new Audio("/sounds/connect.mp3");
+var listeningFinish = new Audio("/sounds/disconnect.mp3");
 var listNameSrcs = {
     unname:{
         listener:new Audio(),
